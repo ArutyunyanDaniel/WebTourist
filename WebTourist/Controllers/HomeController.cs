@@ -14,37 +14,37 @@ namespace WebTourist.Controllers
         {
             //DBToutisrContext db = new DBToutisrContext();
             //List < Attraction > list = db.Attraction.ToList();
-            List<ContainerRouteAttraction> kontainer = new List<ContainerRouteAttraction>();
+            List<ContainerRouteAttraction> kontainerRouteAttraction = new List<ContainerRouteAttraction>();
             using (DBToutisrContext dbTourist = new DBToutisrContext())
             {
                 var List = dbTourist.RouteAttraction.ToList();
                 var ls = dbTourist.Attraction.ToList();
                 var ll = dbTourist.Route.ToList();
-                ContainerRouteAttraction temp = new ContainerRouteAttraction();
+                ContainerRouteAttraction routeAttraction = new ContainerRouteAttraction();
                 foreach (var item in List)
                 {
-                    if (temp.IdR == 0)
+                    if (routeAttraction.IdR == 0)
                     {
-                        temp.IdR = item.Route.Id;
-                        temp.CoordinatesRoute = item.Route.Coordinates;
-                        temp.CoordinatesPointsStart = item.Route.CoordinatesStartingPointsRoute;
+                        routeAttraction.IdR = item.Route.Id;
+                        routeAttraction.CoordinatesRoute = item.Route.Coordinates;
+                        routeAttraction.CoordinatesPointsStart = item.Route.CoordinatesStartingPointsRoute;
                     }
-                    if (temp.IdR == item.Route.Id)
+                    if (routeAttraction.IdR == item.Route.Id)
                     {
                         attraction at = new attraction(item.Attraction.Name, item.Attraction.Description, item.Attraction.Coordinate);
-                        temp.attractions.Add(at);
+                        routeAttraction.attractions.Add(at);
                     }
                     else
                     {
-                        kontainer.Add(temp);
-                        temp = new ContainerRouteAttraction();
+                        kontainerRouteAttraction.Add(routeAttraction);
+                        routeAttraction = new ContainerRouteAttraction();
                         attraction at = new attraction(item.Attraction.Name, item.Attraction.Description, item.Attraction.Coordinate);
-                        temp.attractions.Add(at);
+                        routeAttraction.attractions.Add(at);
                     }
                 }
-                kontainer.Add(temp);
+                kontainerRouteAttraction.Add(routeAttraction);
             }
-            return View(kontainer);
+            return View(kontainerRouteAttraction);
         }
 
     }

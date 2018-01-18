@@ -10,7 +10,35 @@ function initMap() {
     map.addListener('click', function (e) {
         placeMarkerAndPanTo(e.latLng, map);
     });
-  
+    var flightPlanCoordinates = [
+        { lat: 37.772, lng: -122.214 },
+        { lat: 21.291, lng: -157.821 },
+        { lat: -18.142, lng: 178.431 },
+        { lat: -27.467, lng: 153.027 }
+    ];
+    DrawRoute(flightPlanCoordinates);
+    //var flightPath = new google.maps.Polyline({
+    //    path: flightPlanCoordinates,
+    //    geodesic: true,
+    //    strokeColor: '#FF0000',
+    //    strokeOpacity: 1.0,
+    //    strokeWeight: 2
+    //});
+
+    //flightPath.setMap(map);
+}
+
+function DrawRoute(route) {
+    console.log(route);
+    var flightPath = new google.maps.Polyline({
+        path: route,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+
+    flightPath.setMap(map);
 }
 
 function ShowMarker(latLng, name, description, map) {
@@ -30,6 +58,39 @@ function ShowMarker(latLng, name, description, map) {
         infowindow.open(map, marker);
     });
 
+}
+
+function consoleWriteSt(nn) {
+    console.log(nn);
+}
+
+function coordArray(coordString) {
+    var coords = coordString.split(",");  
+    var temp = coords.slice(1,-1);
+    var arr = [];
+
+
+    while (temp.length) {
+        
+        var item = temp[0].split(' ');
+        temp.splice(0, 2);
+        var partFirst = parseFloat(item[0]);
+        var partsecond = parseFloat(item[1]);
+
+        var lat1 = Number(item[0]);
+        var lng1 = Number(item[1]);
+        
+        //console.log(typeof lat + lat);
+        //var point = "new google.maps.LatLng("+lat+","+lng+")";
+        arr.push(new google.maps.LatLng(lat1, lng1));
+
+        //console.log(partFirst);
+        //console.log(partsecond);
+
+        //arr.push(new google.maps.LatLng(partFirst,  partsecond));
+      
+    }
+   console.log(arr);
 }
 
 function placeMarkerAndPanTo(latLng, map) {
@@ -54,7 +115,7 @@ function placeMarkerAndPanTo(latLng, map) {
 function getLatLngFromString(ll) {
 
     ll = ll.slice(1, -1);
-    var latlng = ll.split(' ')
+    var latlng = ll.split(' ');
     return new google.maps.LatLng(parseFloat(latlng[0]), parseFloat(latlng[1]));
 }
 

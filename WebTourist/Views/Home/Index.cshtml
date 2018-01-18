@@ -22,6 +22,8 @@
         {
             @foreach (var item in Model)
             {
+                @:coordArray('@item.CoordinatesRoute');
+
                 @foreach (var it in item.attractions)
                 {
                     @:ShowMarker(getLatLngFromString('@it.CoordinateAt'),'@it.Name','@it.Description', map);
