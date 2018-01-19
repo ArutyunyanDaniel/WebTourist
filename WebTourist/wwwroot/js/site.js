@@ -43,7 +43,7 @@ function DrawRoute(route) {
 
 function ShowMarker(latLng, name, description, map) {
 
-   
+
     var marker = new google.maps.Marker({
         position: latLng,
         map: map,
@@ -65,32 +65,24 @@ function consoleWriteSt(nn) {
 }
 
 function coordArray(coordString) {
-    var coords = coordString.split(",");  
-    var temp = coords.slice(1,-1);
+    var coords = coordString.split(",");
+    var temp = coords.slice(1, -1);
     var arr = [];
 
 
     while (temp.length) {
-        
+
         var item = temp[0].split(' ');
         temp.splice(0, 2);
         var partFirst = parseFloat(item[0]);
         var partsecond = parseFloat(item[1]);
+        var ll = new google.maps.LatLng(partFirst, partsecond);
 
-        var lat1 = Number(item[0]);
-        var lng1 = Number(item[1]);
-        
-        //console.log(typeof lat + lat);
-        //var point = "new google.maps.LatLng("+lat+","+lng+")";
-        arr.push(new google.maps.LatLng(lat1, lng1));
+        placeMarkerAndPanTo(ll, map);
 
-        //console.log(partFirst);
-        //console.log(partsecond);
-
-        //arr.push(new google.maps.LatLng(partFirst,  partsecond));
-      
+        arr.push({ lat: ll.lat(), lng: ll.lng() });
     }
-   console.log(arr);
+    DrawRoute(arr);
 }
 
 function placeMarkerAndPanTo(latLng, map) {
